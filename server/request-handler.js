@@ -39,8 +39,7 @@ exports.handleRequest = function(request, response) {
     if (request.method === 'GET'){
       console.log("GET request received");
       response.writeHead(statusCode, headers);
-        results: messages
-      };
+      var tempObject = {results: messages};
       response.end(JSON.stringify(tempObject));
     }
     else if (request.method === 'POST'){
@@ -53,9 +52,9 @@ exports.handleRequest = function(request, response) {
         newMessage.createdAt = Date();
         messages.push(newMessage);
       });
-      response.writeHead(statusCode, headers);
-      response.end();
     }
+    response.writeHead(statusCode, headers);
+    response.end();     //server must send end response back to client when sending an initial OPTIONS request
   }
 
 
