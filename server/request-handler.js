@@ -7,7 +7,14 @@
 
 var url = require("url");
 var fs = require("fs");
+var qs = require("querystring");
 
+var messages = [{
+  username: 'ben',
+  text: 'hello',
+  createdAt: '2014-05-05T23:52:18.187Z',
+  roomname: 'sf'
+}];
 
 
 exports.handleRequest = function(request, response) {
@@ -32,32 +39,34 @@ exports.handleRequest = function(request, response) {
     if (request.method === 'GET'){
       console.log("GET request received");
       response.writeHead(statusCode, headers);
-      // response.write()
-      var tempObject = {
-        results: [{
-          username: 'ben',
-          text: 'hello',
-          createdAt: '2014-05-05T23:52:18.187Z',
-          roomname: 'sf'
-        }]
+        results: messages
       };
       response.end(JSON.stringify(tempObject));
     }
     else if (request.method === 'POST'){
-      console.log("POST request received");
+      var newMessage = '';
+      request.on('data', function (data){
+        newMessage += data;
+      });
+      request.on('end', function(){
+        newMessage = JSON.parse(newMessage);
+        newMessage.createdAt = Date();
+        messages.push(newMessage);
+      });
       response.writeHead(statusCode, headers);
-      response.end("POST request received");
+      response.end();
     }
   }
 
+
   /* .writeHead() tells our server what HTTP status code to send back */
-  response.writeHead(statusCode, headers);
+  // response.writeHead(statusCode, headers);
 
   /* Make sure to always call response.end() - Node will not send
    * anything back to the client until you do. The string you pass to
    * response.end() will be the body of the response - i.e. what shows
    * up in the browser.*/
-  response.end("Hello, World!");
+  // response.end("Hello, World!");
 };
 
 /* These headers will allow Cross-Origin Resource Sharing (CORS).

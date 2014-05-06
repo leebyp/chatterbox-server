@@ -58,9 +58,9 @@ app.display = function(particular, type){
 
 //sends data to server
 app.send = function(data){
-
+  console.log(data);
   $.ajax({
-    url: "https://api.parse.com/1/classes/chatterbox",
+    url: "http://127.0.0.1:3000/1/classes/messages",
     type: 'POST',
     data: JSON.stringify(data),
     contentType: "application/json",
