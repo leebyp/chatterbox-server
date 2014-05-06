@@ -8,14 +8,7 @@
 var url = require("url");
 var fs = require("fs");
 var qs = require("querystring");
-
-var messages = [{
-  username: 'ben',
-  text: 'hello',
-  createdAt: '2014-05-05T23:52:18.187Z',
-  roomname: 'sf'
-}];
-
+// var messages = require("./messages.js");
 
 exports.handler = function(request, response) {
   /*  the 'request' argument comes from nodes http module. It includes info about the
@@ -37,10 +30,20 @@ exports.handler = function(request, response) {
     if (request.method === 'GET'){
       console.log("GET request received");
       response.writeHead(200, headers);
-      //respond with all messages, but stringified
-      var responsePackage = {results: messages};
-      responsePackage = JSON.stringify(responsePackage);
-      response.end(responsePackage);
+
+      fs.readFile('./messages.rtf', 'utf8', handleFile);
+
+
+      function handleFile (err, data) {
+        if (err) {
+          throw err;
+        }
+        //respond with all messages, but stringified
+        // var responsePackage = {results: data};
+        var responsePackage = JSON.parse("[" + data + "]");
+        responsePackage = JSON.stringify({results: responsePackage});
+        response.end(responsePackage);
+      }
     }
     else if (request.method === 'POST'){
       // for posts, wait until entire message is received,
@@ -53,7 +56,7 @@ exports.handler = function(request, response) {
       request.on('end', function(){
         newMessage = JSON.parse(newMessage);
         newMessage.createdAt = Date();
-        messages.push(newMessage);
+        fs.appendFile('./messages.rtf', ", " + JSON.stringify(newMessage));
       });
       response.writeHead(201, headers);
       response.end();
