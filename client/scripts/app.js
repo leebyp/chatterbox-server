@@ -5,7 +5,7 @@ var app = {};
 //gets data from server, extracts data.results, which is an array, containing all objects that inturn contain all relevant chat data: (createdAt, objectId, roomname, text, updatedAt, username). This is the data that we use to display in our chatroom.
 app.fetch = function(){
   $.ajax({
-    url: "http://127.0.0.1:3000/1/classes/messages",   //show most recent messages
+    url: "http://127.0.0.1:3000/classes/messages",   //show most recent messages
     type: "GET",
     dataType: "json",
     success: function(data){
@@ -60,7 +60,7 @@ app.display = function(particular, type){
 app.send = function(data){
   console.log(data);
   $.ajax({
-    url: "http://127.0.0.1:3000/1/classes/messages",
+    url: "http://127.0.0.1:3000/classes/messages",
     type: 'POST',
     data: JSON.stringify(data),
     contentType: "application/json",

@@ -14,6 +14,7 @@ module.exports = {
     };
     this.end = function(data) {
       console.log('Response.end called.');
+      console.log(typeof(data), data);
       self._ended = true;
       self._data = data;
     };
