@@ -5,8 +5,13 @@
  * this file and include it in basic-server.js so that it actually works.
  * *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html. */
 
+var url = require("url");
+var fs = require("fs");
+
+
+
 exports.handleRequest = function(request, response) {
-  /* the 'request' argument comes from nodes http module. It includes info about the
+  /*  the 'request' argument comes from nodes http module. It includes info about the
   request - such as what URL the browser is requesting. */
 
   /* Documentation for both request and response can be found at
@@ -21,6 +26,29 @@ exports.handleRequest = function(request, response) {
   var headers = defaultCorsHeaders;
 
   headers['Content-Type'] = "text/plain";
+
+  var path = url.parse(request.url).pathname;
+  if (path === '/1/classes/messages'){
+    if (request.method === 'GET'){
+      console.log("GET request received");
+      response.writeHead(statusCode, headers);
+      // response.write()
+      var tempObject = {
+        results: [{
+          username: 'ben',
+          text: 'hello',
+          createdAt: '2014-05-05T23:52:18.187Z',
+          roomname: 'sf'
+        }]
+      };
+      response.end(JSON.stringify(tempObject));
+    }
+    else if (request.method === 'POST'){
+      console.log("POST request received");
+      response.writeHead(statusCode, headers);
+      response.end("POST request received");
+    }
+  }
 
   /* .writeHead() tells our server what HTTP status code to send back */
   response.writeHead(statusCode, headers);

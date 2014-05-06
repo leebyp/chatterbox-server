@@ -5,11 +5,12 @@ var app = {};
 //gets data from server, extracts data.results, which is an array, containing all objects that inturn contain all relevant chat data: (createdAt, objectId, roomname, text, updatedAt, username). This is the data that we use to display in our chatroom.
 app.fetch = function(){
   $.ajax({
-    url: "https://api.parse.com/1/classes/chatterbox?order=-createdAt",   //show most recent messages
+    url: "http://127.0.0.1:3000/1/classes/messages",   //show most recent messages
     type: "GET",
     dataType: "json",
     success: function(data){
-      console.log(data.results);
+      console.log ("data", data);
+      console.log(typeof(data));
       console.log("updating correctly with fetch");
       app.data = data.results;      //array of message objects
       app.display(app.particular, app.currentDisplayType);    //refresh messages: app.particular will determine the element that app.currentDisplayType is referring to
