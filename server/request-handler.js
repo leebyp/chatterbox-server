@@ -67,6 +67,67 @@ exports.handler = function(request, response) {
       response.end();
     }
   }
+  else if (path === '/'){   //home path loads up the client html page
+    fs.readFile('../client/index.html', function (err, html) {
+      if (err) {
+        throw err;
+      }
+      response.writeHeader(200, {"Content-Type": "text/html"});
+      response.write(html);
+      response.end();
+    });
+  }
+  else if (path === '/bower_components/jquery/jquery.min.js'){  //responds to jquery file request from the html
+    fs.readFile('../client/bower_components/jquery/jquery.min.js', function (err, js) {
+      if (err) {
+        throw err;
+      }
+      console.log('in jquery');
+      response.writeHeader(200, {"Content-Type": "text/javascript"});
+      response.write(js);
+      response.end();
+    });
+  }
+  else if (path === '/bower_components/underscore/underscore.js'){  //responds to underscore file request from the html
+    fs.readFile('../client/bower_components/underscore/underscore.js', function (err, js) {
+      if (err) {
+        throw err;
+      }
+      response.writeHeader(200, {"Content-Type": "text/javascript"});
+      response.write(js);
+      response.end();
+    });
+  }
+  else if (path === '/scripts/app.js'){ //responds to app.js file request from the html
+    fs.readFile('../client/scripts/app.js', function (err, html) {
+      if (err) {
+        throw err;
+      }
+      response.writeHeader(200, {"Content-Type": "text/javascript"});
+      response.write(html);
+      response.end();
+    });
+  }
+  else if (path === '/scripts/config.js'){  //responds to config.js file request from the html
+    fs.readFile('../client/scripts/config.js', function (err, html) {
+      if (err) {
+        throw err;
+      }
+      response.writeHeader(200, {"Content-Type": "text/javascript"});
+      response.write(html);
+      response.end();
+    });
+  }
+  else if (path === '/styles/styles.css'){  //responds to styles.css file request from the html
+    fs.readFile('../client/styles/styles.css', function (err, html) {
+      if (err) {
+        throw err;
+      }
+      response.writeHeader(200, {"Content-Type": "text/css"});
+      response.write(html);
+      response.end();
+    });
+  }
   else { // path was illegal - 404 them
     response.writeHead(404, headers);
     response.end();
