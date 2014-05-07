@@ -66,7 +66,7 @@ exports.handler = function(request, response) {
       response.end();     //server must send end response back to client when sending an initial OPTIONS request
     }
     else { // if not post or get,
-      response.writeHead(404, headers);
+      response.writeHead(400, headers);
       response.end();
     }
   }
