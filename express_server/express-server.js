@@ -1,5 +1,7 @@
 var express = require('express');
 var fs = require('fs');
+var path = require('path');
+var http = require('http');
 
 var app = express();
 var headers = {
@@ -52,32 +54,6 @@ app.options('/classes/messages', function(req, res) {
   sendResponse(res, 200);
 });
 
-app.get('/bower_components/jquery/jquery.min.js', function(req, res){
-  fs.readFile('../client/bower_components/jquery/jquery.min.js', function (err, data) {
-    sendResponse(res, 200, data, "text/javascript")
-  });
-});
-
-app.get('/bower_components/underscore/underscore.js', function(req, res){
-  fs.readFile('../client/bower_components/underscore/underscore.js', function (err, data) {
-    sendResponse(res, 200, data, "text/javascript")
-  });
-});
-
-app.get('/scripts/app.js', function(req, res){
-  fs.readFile('../client/scripts/app.js', function (err, data) {
-    sendResponse(res, 200, data, "text/javascript")
-  });
-});
-
-app.get('/scripts/config.js', function(req, res){
-  fs.readFile('../client/scripts/config.js', function (err, data) {
-    sendResponse(res, 200, data, "text/javascript")
-  });
-});
-
-app.get('/styles/styles.css', function(req, res){
-  fs.readFile('../client/styles/styles.css', function (err, data) {
-    sendResponse(res, 200, data, "text/css")
-  });
+app.configure(function () {
+  app.use(express.static(path.join(__dirname, '../client')));
 });
