@@ -1,9 +1,12 @@
+//create server using express library
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
 var http = require('http');
 
 var app = express();
+
+// CORS for cross origin requests
 var headers = {
   "access-control-allow-origin": "*",
   "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -11,6 +14,7 @@ var headers = {
   "access-control-max-age": 10, // Seconds.
 };
 
+//send particular response with status code and data
 function sendResponse(response, status, data, dataType){
   response.set('Content-Type', dataType || 'text/plain');
   response.writeHeader(status, headers);
@@ -18,14 +22,17 @@ function sendResponse(response, status, data, dataType){
   response.end();
 }
 
+//port to tell server to listen to
 app.listen(5000);
 
+//on request to homepage url
 app.get('/', function(req, res) {
   fs.readFile('../client/index.html', function(err, data){
     sendResponse(res, 200, data, 'text/html');
   });
 });
 
+//responds to get request for messages by reading message file
 app.get('/classes/messages', function(req, res) {
   console.log('responding to get')
   fs.readFile('../server/messages.rtf', 'utf8', function(err, data){
@@ -35,6 +42,7 @@ app.get('/classes/messages', function(req, res) {
   });
 });
 
+//takes message on post request and adds to mesages file on server
 app.post('/classes/messages',function(req, res) {
   console.log("calling post");
   var newMessage = '';
@@ -54,6 +62,7 @@ app.options('/classes/messages', function(req, res) {
   sendResponse(res, 200);
 });
 
+//allows access to client source files requested within index.html
 app.configure(function () {
   app.use(express.static(path.join(__dirname, '../client')));
 });
