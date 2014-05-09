@@ -31,7 +31,7 @@ exports.handler = function(request, response) {
       console.log("GET request received");
       response.writeHead(200, headers);
 
-      fs.readFile('./messages.rtf', 'utf8', handleFile);
+      fs.readFile('../server/messages.rtf', 'utf8', handleFile);
 
 
       function handleFile (err, data) {
@@ -52,6 +52,7 @@ exports.handler = function(request, response) {
       request.on('data', function (data){
         newMessage += data;
       });
+      console.log('in post');
       // once complete, begin actual parsing and pushing to messages
       request.on('end', function(){
         newMessage = JSON.parse(newMessage);
@@ -80,8 +81,8 @@ exports.handler = function(request, response) {
       response.end();
     });
   }
-  else if (path === '/bower_components/jquery/jquery.min.js'){  //responds to jquery file request from the html
-    fs.readFile('../client/bower_components/jquery/jquery.min.js', function (err, js) {
+  else if (path === '/bower_components/jquery/dist/jquery.js'){  //responds to jquery file request from the html
+    fs.readFile('../client/bower_components/jquery/dist/jquery.js', function (err, js) {
       if (err) {
         throw err;
       }
