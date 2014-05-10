@@ -31,7 +31,7 @@ exports.handler = function(request, response) {
       console.log("GET request received");
       response.writeHead(200, headers);
 
-      fs.readFile('../server/messages.rtf', 'utf8', handleFile);
+      fs.readFile('./server/messages.rtf', 'utf8', handleFile);
 
 
       function handleFile (err, data) {
@@ -57,7 +57,7 @@ exports.handler = function(request, response) {
       request.on('end', function(){
         newMessage = JSON.parse(newMessage);
         newMessage.createdAt = Date();
-        fs.appendFile('./messages.rtf', ", " + JSON.stringify(newMessage));
+        fs.appendFile('./server/messages.rtf', ", " + JSON.stringify(newMessage));
       });
       response.writeHead(201, headers);
       response.end();
@@ -72,7 +72,7 @@ exports.handler = function(request, response) {
     }
   }
   else if (path === '/'){   //home path loads up the client html page
-    fs.readFile('../client/index.html', function (err, html) {
+    fs.readFile('./client/index.html', function (err, html) {
       if (err) {
         throw err;
       }
@@ -82,7 +82,7 @@ exports.handler = function(request, response) {
     });
   }
   else if (path === '/bower_components/jquery/dist/jquery.js'){  //responds to jquery file request from the html
-    fs.readFile('../client/bower_components/jquery/dist/jquery.js', function (err, js) {
+    fs.readFile('./client/bower_components/jquery/dist/jquery.js', function (err, js) {
       if (err) {
         throw err;
       }
@@ -93,7 +93,7 @@ exports.handler = function(request, response) {
     });
   }
   else if (path === '/bower_components/underscore/underscore.js'){  //responds to underscore file request from the html
-    fs.readFile('../client/bower_components/underscore/underscore.js', function (err, js) {
+    fs.readFile('./client/bower_components/underscore/underscore.js', function (err, js) {
       if (err) {
         throw err;
       }
@@ -103,7 +103,7 @@ exports.handler = function(request, response) {
     });
   }
   else if (path === '/scripts/app.js'){ //responds to app.js file request from the html
-    fs.readFile('../client/scripts/app.js', function (err, html) {
+    fs.readFile('./client/scripts/app.js', function (err, html) {
       if (err) {
         throw err;
       }
@@ -113,7 +113,7 @@ exports.handler = function(request, response) {
     });
   }
   else if (path === '/scripts/config.js'){  //responds to config.js file request from the html
-    fs.readFile('../client/scripts/config.js', function (err, html) {
+    fs.readFile('./client/scripts/config.js', function (err, html) {
       if (err) {
         throw err;
       }
@@ -123,7 +123,7 @@ exports.handler = function(request, response) {
     });
   }
   else if (path === '/styles/styles.css'){  //responds to styles.css file request from the html
-    fs.readFile('../client/styles/styles.css', function (err, html) {
+    fs.readFile('./client/styles/styles.css', function (err, html) {
       if (err) {
         throw err;
       }
