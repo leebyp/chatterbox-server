@@ -1,0 +1,25 @@
+{
+  "name": "chatterbox",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rcpeng34/2014-04-chatterbox-server",
+  "authors": [
+    "rcpeng34 <rcpeng@gmail.com>"
+  ],
+  "keywords": [
+    "chatterbox"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "jquery": "~2.1.1",
+    "moment": "~2.6.0"
+  }
+}
